@@ -1,4 +1,5 @@
 <?php 
+
 namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -13,14 +14,26 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
-        // Other global middleware
-        \App\Http\Middleware\LogRequests::class, // Register LogRequests as global middleware
+        \App\Http\Middleware\EncryptCookies::class,
+        \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+        \Illuminate\Session\Middleware\StartSession::class,
+        \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+        \App\Http\Middleware\VerifyCsrfToken::class,
+        \Illuminate\Routing\Middleware\SubstituteBindings::class,
     ];
-    
+
+    /**
+     * The application's route middleware.
+     *
+     * These middleware may be assigned to groups or used individually.
+     *
+     * @var array
+     */
     protected $routeMiddleware = [
-        // Other route-specific middleware
-        'checkAge' => \App\Http\Middleware\CheckAge::class, // Register CheckAge middleware
+        // Other middleware...
+        'auth' => \App\Http\Middleware\Authenticate::class,
+        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'checkAge' => \App\Http\Middleware\CheckAge::class,
+        // You can add other middleware here as needed
     ];
-    
-    
 }

@@ -43,24 +43,5 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <script>
-        $(document).ready(function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('age')) {
-                const age = parseInt(urlParams.get('age'));
-                let modalBody;
 
-                if (age < 18) {
-                    modalBody = 'Access Denied!';
-                } else if (age >= 21) {
-                    modalBody = 'Access Restricted!';
-                } else {
-                    modalBody = 'You have successfully accessed the dashboard!';
-                }
-
-                $('#dashboardModal .modal-body').text(modalBody);
-                $('#dashboardModal').modal('show');
-            }
-        });
-    </script>
 @endsection
