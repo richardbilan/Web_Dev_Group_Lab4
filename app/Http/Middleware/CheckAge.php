@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Middleware;
 
 use Closure;
@@ -7,14 +6,21 @@ use Illuminate\Http\Request;
 
 class CheckAge
 {
-    public function handle(Request $request, Closure $next, $age = 18)
+    public function handle(Request $request, Closure $next)
     {
-        // Check if the provided age in the query is less than the required age
-        if ($request->query('age') < $age) {
-            return response('Access Denied. You must be at least ' . $age . ' years old.', 403);
+        // ini si age query parameters
+        $age = $request->input('age');
+
+        // Log the age for debugging
+        \Log::info("Checking age: " . $age);
+
+        // pag check ini if less than 18
+        if (!is_numeric($age) || (int)$age < 18) {
+            return redirect('/access-denied');
         }
 
-        // Proceed if age is greater than or equal to the specified age
+     
         return $next($request);
     }
+    
 }
