@@ -6,21 +6,18 @@ use Illuminate\Http\Request;
 
 class CheckAge
 {
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next, $age = 18)
     {
-        // ini si age query parameters
-        $age = $request->input('age');
+        $userAge = $request->query('age');
 
-        // Log the age for debugging
-        \Log::info("Checking age: " . $age);
-
-        // pag check ini if less than 18
-        if (!is_numeric($age) || (int)$age < 18) {
+        if ($userAge < 18) {
             return redirect('/access-denied');
         }
 
-     
+        if ($userAge >= 18 && $userAge < 21) {
+            return redirect('/restricted-dashboard'); // Adjust this to show restricted content
+        }
+
         return $next($request);
     }
-    
 }

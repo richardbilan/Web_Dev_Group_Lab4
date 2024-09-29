@@ -4,9 +4,7 @@
 
 @section('styles')
     <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Figtree:wght@300;600&amp;display=swap'>
-    
     <link rel="stylesheet" href="{{ asset('styles/styles_h.css') }}">
-    <!-- Bootstrap CSS for the modal -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 @endsection
 
@@ -20,7 +18,6 @@
         </a>
     </div>
 
-    <!-- Modal -->
     <div class="modal fade" id="dashboardModal" tabindex="-1" role="dialog" aria-labelledby="dashboardModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -42,17 +39,27 @@
 @endsection
 
 @section('scripts')
-    <!-- Include Bootstrap JS for modal functionality -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
         $(document).ready(function() {
-            // Check if the URL contains the age parameter (meaning user accessed the dashboard)
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.has('age')) {
-                $('#dashboardModal').modal('show'); // Show modal if the user accesses the dashboard
+                const age = parseInt(urlParams.get('age'));
+                let modalBody;
+
+                if (age < 18) {
+                    modalBody = 'Access Denied!';
+                } else if (age >= 21) {
+                    modalBody = 'Access Restricted!';
+                } else {
+                    modalBody = 'You have successfully accessed the dashboard!';
+                }
+
+                $('#dashboardModal .modal-body').text(modalBody);
+                $('#dashboardModal').modal('show');
             }
         });
     </script>

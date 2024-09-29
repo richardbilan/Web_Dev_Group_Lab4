@@ -2,7 +2,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WelcomeController;
 
-
+Route::get('/welcome', function () {
+    return view('welcome');
+})->name('welcome');
 Route::get('/contactus', function () {
     return view('contactus');
 })->name('contact');
