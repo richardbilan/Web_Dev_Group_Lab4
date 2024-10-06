@@ -13,28 +13,15 @@
         <img src="{{ asset('assets/img/home/logo.svg') }}" alt="Laravel Logo" class="logo">
         <h1>Web Development</h1>
         <h2>Group Laravel Project</h2>
-        <a href="{{ url('/about') }}">
-            <button>Explore More</button>
-        </a>
-    </div>
 
-    <div class="modal fade" id="dashboardModal" tabindex="-1" role="dialog" aria-labelledby="dashboardModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="dashboardModalLabel">Dashboard Access</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    You have successfully accessed the dashboard!
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
+        <form action="{{ route('check-age') }}" method="POST">
+            @csrf
+            <div class="form-group">
+                <label for="age">Enter Your Age:</label>
+                <input type="number" id="age" name="age" class="form-control" required>
             </div>
-        </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
     </div>
 @endsection
 
@@ -42,6 +29,4 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-
 @endsection

@@ -1,38 +1,34 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
+// Route for the welcome page
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
+// Route for the contact page
 Route::get('/contactus', function () {
     return view('contactus');
 })->name('contact');
 
+// Route for the about page
 Route::get('/about', function () {
     return view('about');
 })->name('about');
 
-Route::get('/welcome', function (Request $request) {
-    $age = $request->query('age');
+// Route to handle age checking with middleware
+Route::post('/check-age', function (Request $request) {
+    return view('welcome'); // Redirect back to the welcome page
+})->middleware('checkAge')->name('check-age');
 
-    // condition kang sa age limit
-    if ($age < 18) {
-        return redirect('/access-denied');
-    } elseif ($age == 18) { 
-        return view('welcome'); 
-    } elseif ($age >= 21) {
-        return redirect('/restricted-dashboard'); 
-    }
-
-    
-    return view('welcome'); 
-})->name('welcome'); //ini kapag 18 redirect sya sa mismong welcome page ta
-
+// Route for the restricted dashboard (age over 21)
 Route::get('/restricted-dashboard', function () {
-    return "I MISS YOU"; //digdi su messge na maluwas sa 21
-});
+    return "RESTRICTED!! Over age kana!"; // Message for users aged 21 or older
+})->name('restricted-dashboard');
+
+// Route for Access Denied page (age under 18)
 Route::get('/access-denied', function () {
-    return "Access Denied PATAL MINOR KA!"; //ini man sa less than 18
-});
+    return "Access Denied PATAL MINOR KA!"; // Message for users under 18
+})->name('access-denied');

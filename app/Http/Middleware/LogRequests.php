@@ -10,16 +10,16 @@ class LogRequests
 {
     public function handle(Request $request, Closure $next)
     {
-        // Log the request details to log.txt
-        $logData = sprintf(
-            "[%s] %s %s\n",
-            now(),
-            $request->method(),
-            $request->url()
-        );
+        // Log the request details with additional information
+        Log::info('Request Details:', [
+            'method' => $request->method(),
+            'url' => $request->url(),
+            'ip' => $request->ip(),
+            'headers' => $request->headers->all(),
+            'query' => $request->query(),
+            'timestamp' => now(),
+        ]);
 
-        \File::append(storage_path('logs/log.txt'), $logData);
-
-        return $next($request);
+        return $next($request); // Pass the request to the next middleware
     }
 }
